@@ -1,0 +1,5 @@
+Frontend: Angular (mit Angular Material für schnelles UI-Design)
+Backend: FastAPI (leichtgewichtig, schnell und einfach zu deployen)
+Datenverarbeitung: pandas zum Einlesen und Filtern der Excel-Datei (testData.xls)
+Datenformat: Die Daten könnten als JSON über eine REST API bereitgestellt werden
+Deployment: Render oder Railway für einfaches Hosting
