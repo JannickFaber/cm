@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../service/auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,30 +12,28 @@ import { CommonModule } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnDestroy {
   loginForm: FormGroup;
   loginError: string = '';
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  private subscription = new Subscription();
+  private authService = inject(AuthService);
+
+  constructor(private fb: FormBuilder) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   onSubmit() {
     if (this.loginForm.valid) {
-      this.http.post('http://127.0.0.1:8000/token', this.loginForm.value).subscribe({
-        next: (response: any) => {
-          localStorage.setItem('token', response.access_token);
-          console.log('Login erfolgreich!', response);
-          this.loginError = '';
-        },
-        error: (error) => {
-          console.error('Login fehlgeschlagen', error);
-          this.loginError = 'Login fehlgeschlagen. Überprüfe Benutzername und Passwort.';
-        }
-      });
+      const form = this.loginForm.value;
+      this.subscription.add(this.authService.login(form.username, form.password));
     }
   }
 }
