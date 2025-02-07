@@ -2,8 +2,17 @@ from fastapi import FastAPI, Depends, HTTPException
 from auth import create_access_token, get_password_hash, verify_password, get_current_user
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:4200"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Fake-Datenbank (in einer echten Anwendung sollte hier eine DB verwendet werden)
 fake_users_db = {

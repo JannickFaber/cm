@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,6 +12,13 @@ export class ApiService {
   private http = inject(HttpClient);
 
   requestToken(username: string, password: string): Observable<any> {
-    return this.http.post('http://127.0.0.1:8000/token', { username, password });
+
+    const body = new HttpParams()
+    .set('username', username)
+    .set('password', password);
+
+    return this.http.post(this.baseURL + '/login', body.toString(), {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
+    });
   }
 }

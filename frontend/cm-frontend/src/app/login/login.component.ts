@@ -37,6 +37,7 @@ export class LoginComponent implements OnDestroy {
         this.authService.login(form.username, form.password)
           .subscribe(errorMessage => {
             this.loginError = errorMessage;
+            console.log(errorMessage);
           }));
     }
   }
