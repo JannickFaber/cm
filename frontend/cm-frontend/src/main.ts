@@ -10,7 +10,8 @@ const routes: Route[] = [
   { path: '', component: AppComponent },
   {
     path: 'login',
-    loadComponent: () => import('./app/login/login.component').then(m => m.LoginComponent)
+    loadComponent: () => import('./app/login/login.component').then(m => m.LoginComponent),
+    canActivate: [authGuard]
   },
   {
     path: 'dashboard',
