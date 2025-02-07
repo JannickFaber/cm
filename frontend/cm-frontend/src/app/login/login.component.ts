@@ -30,7 +30,7 @@ export class LoginComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.loginForm.valid) {
       const form = this.loginForm.value;
       this.subscription.add(
