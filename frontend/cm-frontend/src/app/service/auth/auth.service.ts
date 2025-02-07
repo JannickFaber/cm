@@ -19,4 +19,8 @@ export class AuthService {
         catchError(() => 'Login fehlgeschlagen. Überprüfe Benutzername und Passwort.')
       )
   }
+
+  logout(): void {
+    localStorage.removeItem('token')
+  }
 }

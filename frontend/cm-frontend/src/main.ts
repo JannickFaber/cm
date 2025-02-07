@@ -8,10 +8,15 @@ import { authGuard } from './app/guards/auth.guard';
 
 const routes: Route[] = [
   { path: '', component: AppComponent },
-  { path: 'login', loadComponent: () => import('./app/login/login.component').then(m => m.LoginComponent) },
-  { path: 'dashboard', 
+  {
+    path: 'login',
+    loadComponent: () => import('./app/login/login.component').then(m => m.LoginComponent)
+  },
+  {
+    path: 'dashboard',
     loadComponent: () => import('./app/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [authGuard] }
+    canActivate: [authGuard]
+  }
 ];
 
 bootstrapApplication(AppComponent, {
