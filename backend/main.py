@@ -3,6 +3,7 @@ from auth import create_access_token, get_password_hash, verify_password, get_cu
 from fastapi.security import OAuth2PasswordRequestForm
 from datetime import timedelta
 from fastapi.middleware.cors import CORSMiddleware
+import pandas as pd
 
 app = FastAPI()
 
@@ -22,6 +23,10 @@ fake_users_db = {
     }
 }
 
+def load_excel_data():
+    df = pd.read_excel("TestData.xlsx", engine="openpyxl")
+    return df.to_dict(orient="records")
+
 @app.post("/login")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     """Login-Endpoint, gibt ein JWT-Token zurück."""
@@ -33,7 +38,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@app.get("/protected")
-async def protected_route(current_user: dict = Depends(get_current_user)):
-    """Ein geschützter Bereich, nur zugänglich mit gültigem Token."""
-    return {"message": f"Willkommen, {current_user['username']}!"}
+@app.get("/data")
+async def protected_route():
+    data = load_excel_data()
+    return data

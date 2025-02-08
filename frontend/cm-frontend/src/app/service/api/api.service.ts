@@ -21,4 +21,8 @@ export class ApiService {
       headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
     });
   }
+
+  requestData(): Observable<any> {
+    return this.http.get(this.baseURL + '/data');
+  }
 }
