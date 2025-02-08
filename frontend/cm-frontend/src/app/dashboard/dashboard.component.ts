@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription.add(this.apiService.requestData()
     .pipe(map(data => mapToChemicalProcessDataArray(data)))
       .subscribe((chemicalProcessData: ChemicalProcessData[]) => {
-
         this.gwpValues = this.reduceChemicalProcessData(chemicalProcessData);
         this.isLoading = false;
       }));

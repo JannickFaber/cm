@@ -63,7 +63,9 @@ export class HeatmapComponent implements OnInit {
     this.worldData.forEach(d => {
 
       let value: number | undefined;
-      const gwps = this.gwpValues.find(value => value.country === d.properties.name);
+      const gwps = this.gwpValues
+      .filter(value => value.name === this.selectedChemical)
+      .find(value => value.country === d.properties.name);
 
       switch (this.selectedGWP) {
         case 'Total': value = gwps?.gwpTotal;
