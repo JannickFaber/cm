@@ -31,7 +31,9 @@ export class HeatmapComponent implements OnInit {
 
       const worldFeatures = topojson.feature(worldTopoJson, worldTopoJson.objects.countries) as unknown as FeatureCollection<Geometry>;
 
-      this.worldData = worldFeatures.features;
+      this.worldData = worldFeatures.features.filter(
+        (d) => d?.properties?.['name'] !== "Antarctica" && d.properties?.['iso_a2'] !== "AQ"
+      );
 
       this.createChart();
     });
@@ -51,7 +53,7 @@ export class HeatmapComponent implements OnInit {
         }]
       },
       options: {
-        showOutline: true,
+        showOutline: false,
         showGraticule: false,
         plugins: {
           legend: {
@@ -61,7 +63,7 @@ export class HeatmapComponent implements OnInit {
         scales: {
           projection: {
             axis: 'x',
-            projection: 'equirectangular'
+            projection: 'mercator'
           }
         }
       }
