@@ -1,11 +1,10 @@
-.table-container {
-    width: 100%;
-    margin: 20px 0;
+  .filter-container {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
   }
-  mat-form-field {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  table {
-    width: 100%;
+
+  .container {
+    background-color: black;
   }

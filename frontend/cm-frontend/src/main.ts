@@ -3,8 +3,8 @@ import { provideRouter, Route } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { provideHttpClient } from '@angular/common/http';
 import { authGuard } from './app/guards/auth.guard';
-
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { importProvidersFrom } from '@angular/core';
 
 const routes: Route[] = [
   { path: '', component: AppComponent },
@@ -23,6 +23,7 @@ const routes: Route[] = [
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
-    provideHttpClient()
+    provideHttpClient(),
+    importProvidersFrom(BrowserAnimationsModule)
   ]
 });

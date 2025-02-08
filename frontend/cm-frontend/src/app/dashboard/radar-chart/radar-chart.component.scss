@@ -1,0 +1,11 @@
+.radar-container {
+    width: 100%;
+    max-width: 500px;
+    /* Maximale Breite des Diagramms */
+    height: 400px;
+    /* Höhe anpassen */
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
