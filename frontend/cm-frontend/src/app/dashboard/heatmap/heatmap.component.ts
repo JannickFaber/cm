@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, Input, inject } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, inject, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 import { ChoroplethController, ColorScale, ProjectionScale, GeoFeature, ChoroplethChart } from 'chartjs-chart-geo';
@@ -19,7 +19,7 @@ Chart.register(...registerables, ChoroplethController, ColorScale, ProjectionSca
   templateUrl: './heatmap.component.html',
   styleUrl: './heatmap.component.scss'
 })
-export class HeatmapComponent implements OnInit {
+export class HeatmapComponent implements OnInit, AfterViewInit {
   @ViewChild('heatmapCanvas', { static: true }) heatmapCanvas!: ElementRef<HTMLCanvasElement>;
   worldData: any[] = [];
 
@@ -42,15 +42,29 @@ export class HeatmapComponent implements OnInit {
     this.loadWorldData();
   }
 
+  ngAfterViewInit() {
+    this.resizeCanvas()
+    window.addEventListener('resize', () => this.resizeCanvas()); // Listener hinzufügen
+  }
+
+  resizeCanvas() {
+    const canvas = this.heatmapCanvas.nativeElement;
+    canvas.width = window.innerWidth * 0.9; // 90% der Fensterbreite
+    canvas.height = window.innerHeight * 0.7; // 70% der Fensterhöhe
+
+    // Falls du mit Chart.js arbeitest, musst du den Chart neu rendern:
+    if (this.currentChart) {
+      this.currentChart.resize();
+    }
+  }
+
   loadWorldData(): void {
     this.http.get<Topology<any>>('/assets/world.geo.json').subscribe((data) => {
       const worldTopoJson = data as Topology<any>;
 
       const worldFeatures = topojson.feature(worldTopoJson, worldTopoJson.objects.countries) as unknown as FeatureCollection<Geometry>;
 
-      this.worldData = worldFeatures.features.filter(
-        (d) => d?.properties?.['name'] !== "Antarctica" && d.properties?.['iso_a2'] !== "AQ"
-      );
+      this.worldData = worldFeatures.features
 
       this.createChart();
     });
@@ -64,8 +78,8 @@ export class HeatmapComponent implements OnInit {
 
       let value: number | undefined;
       const gwps = this.gwpValues
-      .filter(value => value.name === this.selectedChemical)
-      .find(value => value.country === d.properties.name);
+        .filter(value => value.name === this.selectedChemical)
+        .find(value => value.country === d.properties.name);
 
       switch (this.selectedGWP) {
         case 'Total': value = gwps?.gwpTotal;
@@ -86,6 +100,7 @@ export class HeatmapComponent implements OnInit {
 
 
   createChart(): void {
+
     if (!this.worldData || !this.heatmapCanvas.nativeElement) return;
 
     if (this.currentChart) {
@@ -97,23 +112,33 @@ export class HeatmapComponent implements OnInit {
       data: {
         labels: this.worldData.map((d) => d.properties.name),
         datasets: [{
-          label: 'Countries',
+          label: '',
           data: this.getData(),
         }]
       },
       options: {
-        showOutline: false,
+        responsive: true,
+        maintainAspectRatio: false,
+        showOutline: true,
         showGraticule: false,
         plugins: {
           legend: {
             display: false
-          },
+          }
         },
         scales: {
           projection: {
             axis: 'x',
             projection: 'mercator'
-          }
+          },
+          color: {
+            axis: 'x',
+            quantize: 5,
+            legend: {
+              position: 'bottom-right',
+              align: 'right'
+            }
+          },
         }
       }
     });

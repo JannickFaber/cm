@@ -1,6 +1,38 @@
+.filter-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  div {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem
+  }
+}
+
 canvas {
   width: 100% !important;
   height: auto !important;
-  max-width: 1200px;
-  max-height: 600px;
+  min-height: 50rem;
+  display: block;
+}
+
+#canvas-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.mat-mdc-form-field {
+  min-width: 16rem;
+}
+
+@media (max-width: 768px) {
+  #canvas-wrapper {
+    max-height: 40vh;
+  }
+
+  canvas {
+    min-height: auto;
+  }
 }

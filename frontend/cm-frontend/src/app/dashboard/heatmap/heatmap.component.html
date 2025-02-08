@@ -1,16 +1,20 @@
-
-<mat-form-field appearance="outline">
-    <mat-label>Chemical</mat-label>
-    <mat-select [(value)]="selectedChemical" (selectionChange)="createChart()">
-      <mat-option *ngFor="let chemical of chemicals" [value]="chemical">{{ chemical }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>GWP Type</mat-label>
-    <mat-select [(value)]="selectedGWP" (selectionChange)="createChart()">
-      <mat-option *ngFor="let gwp of gwps" [value]="gwp">{{ gwp }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-<canvas #heatmapCanvas></canvas>
+<div class="filter-wrapper">
+  <div><mat-form-field appearance="outline">
+      <mat-label>Chemical</mat-label>
+      <mat-select [(value)]="selectedChemical" (selectionChange)="createChart()">
+        <mat-option *ngFor="let chemical of chemicals" [value]="chemical">{{ chemical }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>GWP Type</mat-label>
+      <mat-select [(value)]="selectedGWP" (selectionChange)="createChart()">
+        <mat-option *ngFor="let gwp of gwps" [value]="gwp">{{ gwp }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div id="canvas-wrapper">
+  <canvas #heatmapCanvas></canvas>
+</div>
