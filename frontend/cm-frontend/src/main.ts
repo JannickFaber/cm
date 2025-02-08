@@ -5,6 +5,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { authGuard } from './app/guards/auth.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const routes: Route[] = [
   { path: '', component: AppComponent },
@@ -24,6 +25,6 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     provideHttpClient(),
-    importProvidersFrom(BrowserAnimationsModule)
+    importProvidersFrom(BrowserAnimationsModule), provideAnimationsAsync()
   ]
 });
