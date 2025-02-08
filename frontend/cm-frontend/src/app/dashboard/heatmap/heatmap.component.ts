@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
-import { ChoroplethController, ColorScale, ProjectionScale, GeoFeature } from 'chartjs-chart-geo';
+import { ChoroplethController, ColorScale, ProjectionScale, GeoFeature, ChoroplethChart } from 'chartjs-chart-geo';
 import * as topojson from 'topojson-client';
 import { FeatureCollection, Geometry } from 'geojson';
 import { Topology } from 'topojson-specification';
@@ -29,6 +29,7 @@ export class HeatmapComponent implements OnInit {
   selectedGWP: string = 'Total';
   chemicals: string[] = [];
   gwps: string[] = [];
+  currentChart: ChoroplethChart | undefined;
 
   private http = inject(HttpClient);
 
@@ -39,10 +40,6 @@ export class HeatmapComponent implements OnInit {
     this.gwps = ['Total', 'Biogenic Emission', 'Biogenic Reduction', 'Fossil', 'Land use'];
 
     this.loadWorldData();
-  }
-
-  applyFilter(): void {
-
   }
 
   loadWorldData(): void {
@@ -64,8 +61,22 @@ export class HeatmapComponent implements OnInit {
     const data: { feature: any, value: number }[] = [];
 
     this.worldData.forEach(d => {
-      const total = this.gwpValues.find(value => value.country === d.properties.name)?.gwpTotal;
-      data.push({ feature: d, value: total ? total : NaN })
+
+      let value: number | undefined;
+      const gwps = this.gwpValues.find(value => value.country === d.properties.name);
+
+      switch (this.selectedGWP) {
+        case 'Total': value = gwps?.gwpTotal;
+          break;
+        case 'Biogenic Emission': value = gwps?.gwpBiogenicEmissions;
+          break;
+        case 'Biogenic Reduction': value = gwps?.gwpBiogenicRemoval;
+          break;
+        case 'Fossil': value = gwps?.gwpFossil;
+          break;
+        case 'Land use': value = gwps?.gwpLandUse;
+      }
+      data.push({ feature: d, value: value ? value : NaN })
     });
 
     return data;
@@ -75,7 +86,11 @@ export class HeatmapComponent implements OnInit {
   createChart(): void {
     if (!this.worldData || !this.heatmapCanvas.nativeElement) return;
 
-    new Chart(this.heatmapCanvas.nativeElement, {
+    if (this.currentChart) {
+      this.currentChart.destroy();
+    }
+
+    this.currentChart = new Chart(this.heatmapCanvas.nativeElement, {
       type: 'choropleth',
       data: {
         labels: this.worldData.map((d) => d.properties.name),

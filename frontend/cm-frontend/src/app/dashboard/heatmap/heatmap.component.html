@@ -1,14 +1,14 @@
 
 <mat-form-field appearance="outline">
-    <mat-label>Stoff</mat-label>
-    <mat-select [(value)]="selectedChemical" (selectionChange)="applyFilter()">
+    <mat-label>Chemical</mat-label>
+    <mat-select [(value)]="selectedChemical" (selectionChange)="createChart()">
       <mat-option *ngFor="let chemical of chemicals" [value]="chemical">{{ chemical }}</mat-option>
     </mat-select>
   </mat-form-field>
 
   <mat-form-field appearance="outline">
     <mat-label>GWP Type</mat-label>
-    <mat-select [(value)]="selectedGWP" (selectionChange)="applyFilter()">
+    <mat-select [(value)]="selectedGWP" (selectionChange)="createChart()">
       <mat-option *ngFor="let gwp of gwps" [value]="gwp">{{ gwp }}</mat-option>
     </mat-select>
   </mat-form-field>
