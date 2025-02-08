@@ -1,53 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
   standalone: true,
-  imports: [CommonModule, MatTableModule],
-  template: `
-    <table mat-table [dataSource]="data" class="mat-elevation-z8">
-
-      <!-- Stoff-Name -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Stoff </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-
-      <!-- CAS-Nummer -->
-      <ng-container matColumnDef="cas">
-        <th mat-header-cell *matHeaderCellDef> CAS-Nummer </th>
-        <td mat-cell *matCellDef="let element"> {{element.cas}} </td>
-      </ng-container>
-
-      <!-- Land -->
-      <ng-container matColumnDef="country">
-        <th mat-header-cell *matHeaderCellDef> Land </th>
-        <td mat-cell *matCellDef="let element"> {{element.country}} </td>
-      </ng-container>
-
-      <!-- Hauptumweltauswirkung -->
-      <ng-container matColumnDef="impact">
-        <th mat-header-cell *matHeaderCellDef> Haupt-Umweltauswirkung </th>
-        <td mat-cell *matCellDef="let element"> {{element.impact}} </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  `,
-  styles: [
-    `
-      table {
-        width: 100%;
-        margin: 20px 0;
-      }
-      th {
-        text-align: left;
-      }
-    `
-  ]
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatInputModule,
+    FormsModule
+  ],
+  templateUrl: './table.component.html',
+  styleUrl: './table.component.scss'
 })
 export class TableComponent {
   displayedColumns: string[] = ['name', 'cas', 'country', 'impact'];
@@ -58,4 +32,18 @@ export class TableComponent {
     { name: "1,3-dichloropropene", cas: "542-75-6", country: "CN", impact: "Ozone Depletion" },
     { name: "1,8-Diazabicyclo(5.4.0)undec-7-ene", cas: "6674-22-2", country: "JP", impact: "Smog Formation" }
   ];
+  dataSource = new MatTableDataSource(this.data);
+
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
 }
