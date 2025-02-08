@@ -1,11 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Chart, registerables } from 'chart.js';
 import { ChoroplethController, ColorScale, ProjectionScale, GeoFeature } from 'chartjs-chart-geo';
 import * as topojson from 'topojson-client';
 import { FeatureCollection, Geometry } from 'geojson';
 import { Topology } from 'topojson-specification';
-import * as d3 from 'd3-geo';
+import { GWPValues } from './g-w-p-values';
 
 Chart.register(...registerables, ChoroplethController, ColorScale, ProjectionScale, GeoFeature);
 
@@ -19,7 +19,9 @@ export class HeatmapComponent implements OnInit {
   @ViewChild('heatmapCanvas', { static: true }) heatmapCanvas!: ElementRef<HTMLCanvasElement>;
   worldData: any[] = [];
 
-  constructor(private http: HttpClient) { }
+  @Input() gwpValues: GWPValues[] = [];
+
+  private http = inject(HttpClient);
 
   ngOnInit(): void {
     this.loadWorldData();
