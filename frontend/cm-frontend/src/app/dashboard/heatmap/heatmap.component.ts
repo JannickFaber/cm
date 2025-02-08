@@ -29,11 +29,9 @@ export class HeatmapComponent implements OnInit {
     this.http.get<Topology<any>>('/assets/world.geo.json').subscribe((data) => {
       const worldTopoJson = data as Topology<any>;
 
-      // Konvertiere TopoJSON zu GeoJSON
       const worldFeatures = topojson.feature(worldTopoJson, worldTopoJson.objects.countries) as unknown as FeatureCollection<Geometry>;
 
-      this.worldData = worldFeatures.features; // Jetzt korrekt als GeoJSON gespeichert
-      console.log(this.worldData); // Überprüfe, ob die Daten richtig geladen sind
+      this.worldData = worldFeatures.features;
 
       this.createChart();
     });
@@ -43,34 +41,27 @@ export class HeatmapComponent implements OnInit {
   createChart(): void {
     if (!this.worldData || !this.heatmapCanvas.nativeElement) return;
 
-    const width = this.heatmapCanvas.nativeElement.width;
-    const height = this.heatmapCanvas.nativeElement.height;
-
-    // 🟢 D3-Projektion mit fitSize
-    const projection = d3.geoNaturalEarth1()
-      .scale(width / 6) // Skaliert die Karte korrekt
-      .translate([width / 2, height / 2]);
-    const pathGenerator = d3.geoPath(projection);
-
-    projection.fitSize([width, height], { type: 'FeatureCollection', features: this.worldData });
-
     new Chart(this.heatmapCanvas.nativeElement, {
       type: 'choropleth',
       data: {
-        labels: this.worldData.map((d: any) => d.properties.name),
+        labels: this.worldData.map((d) => d.properties.name),
         datasets: [{
-          label: 'Environmental Impact by Country',
-          data: this.worldData.map((d: any) => ({
-            feature: d,
-            value: Math.random() * 100 // Beispielwert, hier echte Werte einsetzen
-          }))
+          label: 'Countries',
+          data: this.worldData.map((d) => ({ feature: d, value: Math.random() })),
         }]
       },
       options: {
-        plugins: {},
+        showOutline: true,
+        showGraticule: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+        },
         scales: {
-          xy: {
-            projection // 🟢 D3-Projektion direkt an Chart.js übergeben
+          projection: {
+            axis: 'x',
+            projection: 'equirectangular'
           }
         }
       }
