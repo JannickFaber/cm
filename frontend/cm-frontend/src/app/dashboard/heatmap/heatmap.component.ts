@@ -132,6 +132,7 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
             projection: 'mercator'
           },
           color: {
+            display: false,
             axis: 'x',
             quantize: 5,
             legend: {
