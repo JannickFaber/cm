@@ -41,6 +41,18 @@ export class HeatmapComponent implements OnInit {
     });
   }
 
+  getData(): {feature: any, value: number}[] {
+
+    const data: {feature: any, value: number}[] = [];
+
+    this.worldData.forEach(d => {
+      const total = this.gwpValues.find(value => value.country === d.properties.name)?.gwpTotal;
+        data.push({feature: d, value: total ? total : NaN})
+    });
+
+    return data;
+  }
+
 
   createChart(): void {
     if (!this.worldData || !this.heatmapCanvas.nativeElement) return;
@@ -51,7 +63,7 @@ export class HeatmapComponent implements OnInit {
         labels: this.worldData.map((d) => d.properties.name),
         datasets: [{
           label: 'Countries',
-          data: this.worldData.map((d) => ({ feature: d, value: Math.random() })),
+          data: this.getData(),
         }]
       },
       options: {
