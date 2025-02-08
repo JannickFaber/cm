@@ -11,11 +11,20 @@ import { ApiService } from '../service/api/api.service';
 import { map, Subscription } from 'rxjs';
 import { ChemicalProcessData, mapToChemicalProcessDataArray } from './chemical-process-data';
 import { GWPValues } from './heatmap/g-w-p-values';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, BarchartComponent, TableComponent, HeatmapComponent, RadarChartComponent],
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    BarchartComponent,
+    TableComponent,
+    HeatmapComponent,
+    RadarChartComponent,
+    MatCardModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -38,7 +47,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscription.add(this.apiService.requestData()
-    .pipe(map(data => mapToChemicalProcessDataArray(data)))
+      .pipe(map(data => mapToChemicalProcessDataArray(data)))
       .subscribe((chemicalProcessData: ChemicalProcessData[]) => {
         this.gwpValues = this.reduceChemicalProcessData(chemicalProcessData);
         this.isLoading = false;
