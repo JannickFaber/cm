@@ -114,12 +114,14 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
         datasets: [{
           label: '',
           data: this.getData(),
+          borderColor: "grey", // Dunklere Ränder für bessere Sichtbarkeit
+          borderWidth: 0.4
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        showOutline: true,
+        showOutline: false,
         showGraticule: false,
         plugins: {
           legend: {
