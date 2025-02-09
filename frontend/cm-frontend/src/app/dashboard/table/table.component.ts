@@ -10,6 +10,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { ChemicalProcessData } from '../chemical-process-data';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { inject } from '@angular/core';
+import { DetailsComponent } from './details/details.component';
 
 @Component({
   selector: 'app-table',
@@ -21,7 +24,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatPaginatorModule,
     MatInputModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
@@ -30,6 +34,7 @@ export class TableComponent {
 
   displayedColumns: string[] = ['name', 'cas', 'country', 'total'];
   dataSource: any;
+  readonly dialog = inject(MatDialog);
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -71,6 +76,14 @@ export class TableComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  openDialog(data: any) {
+    const dialogRef = this.dialog.open(DetailsComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }
 
