@@ -26,7 +26,7 @@ import { ChemicalProcessData } from '../chemical-process-data';
 })
 export class TableComponent {
 
-  displayedColumns: string[] = ['name', 'cas', 'country', 'impact'];
+  displayedColumns: string[] = ['name', 'cas', 'country', 'total', 'bioEmission', 'bioRemoval', 'fossil', 'landUse'];
   dataSource: any;
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -49,7 +49,11 @@ export class TableComponent {
         name: chemData.name,
         cas: chemData.cas,
         country: chemData.country,
-        impact: chemData.gwpTotal.toFixed(3)
+        total: chemData.gwpTotal.toFixed(3),
+        bioEmission: chemData.gwpBiogenicEmissions.toFixed(3),
+        bioRemoval: chemData.gwpBiogenicRemoval.toFixed(3),
+        fossil: chemData.gwpFossil.toFixed(3),
+        landUse: chemData.gwpLandUse.toFixed(3),
       }
     })
   }
@@ -64,5 +68,9 @@ interface TableData {
   name: string;
   cas: string;
   country: string;
-  impact: string;
+  total: string;
+  bioEmission: string;
+  bioRemoval: string;
+  fossil: string;
+  landUse: string;
 }
