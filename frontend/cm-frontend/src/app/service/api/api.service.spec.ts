@@ -35,7 +35,7 @@ describe('ApiService', () => {
       expect(response.access_token).toBe('mock-token');
     });
 
-    const req = httpTestingController.expectOne('http://127.0.0.1:8000/login');
+    const req = httpTestingController.expectOne(apiService.baseURL + '/login');
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(new HttpParams().set('username', username).set('password', password).toString());
     expect(req.request.headers.get('Content-Type')).toBe('application/x-www-form-urlencoded');
@@ -44,13 +44,15 @@ describe('ApiService', () => {
   });
 
   it('should make a GET request to request LCA data', () => {
+
     apiService.requestData().subscribe(data => {
       expect(data.length).toBe(2);
       expect(data).toEqual(mockLCAData);
     });
 
-    const req = httpTestingController.expectOne('http://127.0.0.1:8000/data');
+    const req = httpTestingController.expectOne(apiService.baseURL + '/data');
     expect(req.request.method).toBe('GET');
+    expect(req.request.headers.get('Authorization')).toBe(`Bearer null`);
 
     req.flush(mockLCAData);
   });
@@ -63,7 +65,7 @@ describe('ApiService', () => {
       expect(response).toBeNull();
     });
 
-    const req = httpTestingController.expectOne('http://127.0.0.1:8000/login');
+    const req = httpTestingController.expectOne(apiService.baseURL + '/login');
     expect(req.request.method).toBe('POST');
 
     req.flush(null, { status: 400, statusText: 'Bad Request' });
@@ -72,13 +74,13 @@ describe('ApiService', () => {
   it('should handle a failed GET request for LCA data', () => {
 
     apiService.requestData().subscribe(
-      () => {},
+      () => { },
       error => {
         expect(error.status).toBe(500);
       }
     );
 
-    const req = httpTestingController.expectOne('http://127.0.0.1:8000/data');
+    const req = httpTestingController.expectOne(apiService.baseURL + '/data');
     expect(req.request.method).toBe('GET');
 
 
