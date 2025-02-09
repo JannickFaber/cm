@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { ChemicalProcessData } from '../chemical-process-data';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-table',
@@ -19,14 +20,15 @@ import { ChemicalProcessData } from '../chemical-process-data';
     MatSortModule,
     MatPaginatorModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatCheckboxModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 export class TableComponent {
 
-  displayedColumns: string[] = ['name', 'cas', 'country', 'total', 'bioEmission', 'bioRemoval', 'fossil', 'landUse'];
+  displayedColumns: string[] = ['name', 'cas', 'country', 'total'];
   dataSource: any;
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -36,6 +38,14 @@ export class TableComponent {
 
     const tableData = this.mapData(data);
     this.dataSource = new MatTableDataSource(tableData);
+  }
+
+  toggleTable(value: string): void {
+    if (this.displayedColumns.includes(value)) {
+      this.displayedColumns = this.displayedColumns.filter(entry => entry !== value);
+    } else {
+      this.displayedColumns.push(value);
+    }
   }
 
   ngAfterViewInit() {

@@ -14,3 +14,17 @@ table {
 .search {
   max-width: 16rem;
 }
+
+.filters {
+  display: flex;
+  justify-content: left;
+  align-items: start;
+
+  .checkbox {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    min-height: 3.75rem;
+    display: flex;
+    align-items: center;
+  }
+}
