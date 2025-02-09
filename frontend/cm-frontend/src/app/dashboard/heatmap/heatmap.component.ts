@@ -32,6 +32,7 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
   chemicalControl = new FormControl('');
   filteredChemicals: Observable<string[]> | undefined;
   selectedGWP: string = 'Total';
+  chemicalNames: ChemicalName[] = [];
   chemicals: string[] = [];
   gwps: string[] = [];
   currentChart: ChoroplethChart | undefined;
@@ -39,7 +40,8 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
   private http = inject(HttpClient);
 
   ngOnInit(): void {
-    this.chemicals = [...new Set(this.gwpValues.map(values => values.name))];
+    this.chemicals = [...new Set(this.gwpValues.map(value => value.name))];
+    this.chemicalNames = this.chemicals.map(chem => ({ name: chem, cas: this.gwpValues.find(value => value.name === chem)?.cas }));
     this.chemicalControl.setValue(this.chemicals[0]);
 
     this.gwps = ['Total', 'Biogenic Emission', 'Biogenic Reduction', 'Fossil', 'Land use'];
@@ -198,6 +200,13 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
 
   private filterChemicals(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.chemicals.filter(chemical => chemical.toLowerCase().includes(filterValue));
+    return this.chemicalNames
+    .filter(chemical => chemical.name.toLowerCase().includes(filterValue) || chemical.cas?.toLowerCase().includes(filterValue))
+    .map(chem => chem.name);
   }
+}
+
+interface ChemicalName {
+  name: string;
+  cas: string | undefined;
 }
