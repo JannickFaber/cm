@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-import jwt
+from jose import JWTError, jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
@@ -41,16 +41,18 @@ def decode_access_token(token: str):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
-    except jwt.ExpiredSignatureError:
+    except JWTError:
         raise HTTPException(status_code=401, detail="Token abgelaufen")
-    except jwt.InvalidTokenError:
+    except JWTError:
         raise HTTPException(status_code=401, detail="Ungültiges Token")
 
-
-async def get_current_user(token: str = Depends(oauth2_scheme)):
-    """Validiert das Token und gibt die Benutzerinformationen zurück."""
-    payload = decode_access_token(token)
-    username: str = payload.get("sub")
-    if username is None:
-        raise HTTPException(status_code=401, detail="Ungültiges Token")
-    return {"username": username}  # Hier könnte man echte Benutzerdaten aus einer DB laden
+    
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    try:
+        payload = decode_access_token(token)
+        username: str = payload.get("sub")
+        if username is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
+        return username
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")

@@ -39,6 +39,6 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
 
 
 @app.get("/data")
-async def protected_route():
+async def protected_route(current_user: str = Depends(get_current_user)):
     data = load_excel_data()
     return data
