@@ -16,6 +16,10 @@ table {
 .search {
   max-width: 20rem;
   flex-grow: 1;
+
+  .mat-mdc-form-field {
+    margin-bottom: 0;
+  }
 }
 
 .filters {
@@ -23,6 +27,7 @@ table {
   justify-content: left;
   align-items: start;
   flex-wrap: wrap;
+  margin-bottom: 1rem;
 
   .checkbox {
     margin-left: 0.5rem;
@@ -30,5 +35,21 @@ table {
     min-height: 3.75rem;
     display: flex;
     align-items: center;
+  }
+}
+
+.checkbox-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+@media (max-width: 768px) {
+  h3 {
+    text-align: center;
+  }
+
+  .filters {
+    justify-content: center;
   }
 }
