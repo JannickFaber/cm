@@ -47,13 +47,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   reduceChemicalProcessData(data: ChemicalProcessData[]): GWPValues[] {
-    return data.map(({ name, cas, country, isoCode, bioCarbon, carbon, gwpTotal, gwpBiogenicEmissions, gwpBiogenicRemoval, gwpFossil, gwpLandUse }) => ({
+    return data.map(({ name, cas, country, gwpTotal, gwpBiogenicEmissions, gwpBiogenicRemoval, gwpFossil, gwpLandUse }) => ({
       name,
       cas,
       country,
-      isoCode,
-      bioCarbon,
-      carbon,
       gwpTotal,
       gwpBiogenicEmissions,
       gwpBiogenicRemoval,
