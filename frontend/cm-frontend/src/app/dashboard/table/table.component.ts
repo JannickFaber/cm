@@ -25,28 +25,44 @@ import { ChemicalProcessData } from '../chemical-process-data';
   styleUrl: './table.component.scss'
 })
 export class TableComponent {
+
   displayedColumns: string[] = ['name', 'cas', 'country', 'impact'];
-  data = [
-    { name: "1,1'-methylenedibenzene", cas: "101-81-5", country: "DE", impact: "GWP100" },
-    { name: "1,2,3-trichlorobenzene", cas: "87-61-6", country: "US", impact: "Acidification" },
-    { name: "1,2-diaminopropane", cas: "78-90-0", country: "FR", impact: "Eutrophication" },
-    { name: "1,3-dichloropropene", cas: "542-75-6", country: "CN", impact: "Ozone Depletion" },
-    { name: "1,8-Diazabicyclo(5.4.0)undec-7-ene", cas: "6674-22-2", country: "JP", impact: "Smog Formation" }
-  ];
-  dataSource = new MatTableDataSource(this.data);
+  dataSource: any;
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  @Input() chemicalProcessData: ChemicalProcessData[] = [];
+  @Input() set chemicalProcessData(data: ChemicalProcessData[]) {
+
+    const tableData = this.mapData(data);
+    this.dataSource = new MatTableDataSource(tableData);
+  }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
+  private mapData(data: ChemicalProcessData[]): TableData[] {
+    return data.map(chemData => {
+      return {
+        name: chemData.name,
+        cas: chemData.cas,
+        country: chemData.country,
+        impact: chemData.gwpTotal.toFixed(3)
+      }
+    })
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value.trim().toLowerCase();
     this.dataSource.filter = filterValue;
   }
+}
+
+interface TableData {
+  name: string;
+  cas: string;
+  country: string;
+  impact: string;
 }
