@@ -27,7 +27,7 @@ export interface ChemicalProcessData {
   completenessTfS: string;
   reliabilityTfS: string;
   overallQualityTfS: string;
-  dqrShortTfS: number;
+  dqrShortTfS: number; // Rating Datenqualität
   pdsTfS: string;
   gwpTotal: number; // Gesamtwert des Treibhauspotenzials über 100 Jahre (Standard in LCA-Analysen)
   gwpBiogenicEmissions: number; // Beitrag aus biogenen Quellen (z. B. Biomasse, biogene Reststoffe)

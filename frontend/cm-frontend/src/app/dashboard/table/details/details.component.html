@@ -1,6 +1,62 @@
-<h2 mat-dialog-title>Name</h2>
+<h2 mat-dialog-title>Details</h2>
 <mat-dialog-content class="mat-typography">
-  Inhalt
+
+  <div class="details">
+    <div class="row">
+      <div class="label">Name:</div>
+      <div class="value">{{data.name}}</div>
+    </div>
+    <div class="row">
+      <div class="label">Chemical Abstract Service Number (CAS):</div>
+      <div class="value">{{data.cas}}</div>
+    </div>
+    <div class="row">
+      <div class="label">Country:</div>
+      <div class="value">{{data.country}}</div>
+    </div>
+    <div class="row">
+      <div class="label">GWP Total:</div>
+      <div class="value">{{data.gwpTotal}}</div>
+    </div>
+    <div class="row">
+      <div class="label">GWP Bio. emissions:</div>
+      <div class="value">{{data.gwpBiogenicEmissions}}</div>
+    </div>
+    <div class="row">
+      <div class="label">GWP Bio. removal:</div>
+      <div class="value">{{data.gwpBiogenicRemoval}}</div>
+    </div>
+    <div class="row">
+      <div class="label">GWP fossil:</div>
+      <div class="value">{{data.gwpFossil}}</div>
+    </div>
+    <div class="row">
+      <div class="label">GWP land use:</div>
+      <div class="value">{{data.gwpLandUse}}</div>
+    </div>
+    <div class="row">
+      <div class="label">Carbon:</div>
+      <div class="value">{{data.carbon}}</div>
+    </div>
+    <div class="row">
+      <div class="label">Bio. Carbon:</div>
+      <div class="value">{{data.bioCarbon}}</div>
+    </div>
+    <div class="row">
+      <div class="label">Data Quality Rating (Together for Sustainability):</div>
+      <div class="value">{{data.dqrShortTfS}}</div>
+    </div>
+    <div class="row">
+      <div class="label">Allocation:</div>
+      <div class="value">{{data.allocation}}</div>
+    </div>
+    <div class="row">
+      <div class="label">Decription:</div>
+      <div class="value">{{data.description}}</div>
+    </div>
+  </div>
+
+
 </mat-dialog-content>
 <mat-dialog-actions>
   <button id="dialog-button" mat-stroked-button mat-dialog-close>Close</button>

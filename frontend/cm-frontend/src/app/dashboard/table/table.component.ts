@@ -37,6 +37,7 @@ export class TableComponent {
 
   displayedColumns: string[] = ['name', 'cas', 'country', 'total'];
   dataSource: any;
+  _chemicalProcessData: ChemicalProcessData[] = [];
   readonly dialog = inject(MatDialog);
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -44,6 +45,7 @@ export class TableComponent {
 
   @Input() set chemicalProcessData(data: ChemicalProcessData[]) {
 
+    this._chemicalProcessData = data;
     const tableData = this.mapData(data);
     this.dataSource = new MatTableDataSource(tableData);
   }
@@ -82,7 +84,13 @@ export class TableComponent {
   }
 
   openDialog(data: any) {
-    this.dialog.open(DetailsComponent, { data });
+
+    const cas = data.cas;
+    const country = data.country;
+
+    this.dialog.open(DetailsComponent, {data: this._chemicalProcessData.
+      filter(processData => processData.country === country)
+      .find(processData => processData.cas === cas)});
   }
 }
 

@@ -1,3 +1,28 @@
 #dialog-button {
     border-color: black;
 }
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+  }
+  
+  .label {
+    flex: 1;
+  }
+  
+  .value {
+    flex: 2;
+    text-align: left;
+    align-self: center;
+    padding-left: 0.25rem;
+  }
+  
