@@ -1,29 +1,42 @@
 .login-container {
-    width: 300px;
-    margin: auto;
-    text-align: center;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background-color: gray;
-  }
-  
-  .error {
-    color: red;
-    margin-top: 10px;
-  }
+  margin: 0 auto;
+  text-align: center;
+}
+
+.form-wrapper {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 26rem;
+  padding-bottom: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: gray;
+}
+
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
+.mat-mdc-card {
+  max-width: 30rem;
+  margin: 0 auto;
+}

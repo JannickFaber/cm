@@ -3,6 +3,15 @@
 :root {
   @include mat.core-theme(mat.define-theme());
   @include mat.all-component-themes(mat.define-theme());
+
+  .mat-mdc-card {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .mat-mdc-text-field-wrapper {
+    max-height: 3.75rem;
+  }
 }
 
 .mat-mdc-text-field-wrapper {

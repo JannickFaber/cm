@@ -1,18 +1,25 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label>Benutzername:</label>
-      <input type="text" formControlName="username">
+<mat-card>
+  <mat-card-content>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username" placeholder="Username">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Password">
+        </mat-form-field>
+
+        <button type="submit" [disabled]="loginForm.invalid" mat-stroked-button>Sign in</button>
+      </div>
+      </form>
+
+      <p *ngIf="loginError" class="error">{{ loginError }}</p>
     </div>
-
-    <div>
-      <label>Passwort:</label>
-      <input type="password" formControlName="password">
-    </div>
-
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
-  </form>
-
-  <p *ngIf="loginError" class="error">{{ loginError }}</p>
-</div>
+  </mat-card-content>
+</mat-card>
