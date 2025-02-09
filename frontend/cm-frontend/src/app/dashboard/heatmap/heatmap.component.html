@@ -5,10 +5,13 @@
       <div class="input-field">
         <mat-form-field appearance="outline">
           <mat-label>Chemical</mat-label>
-          <mat-select [(value)]="selectedChemical" (selectionChange)="createChart()">
-            <mat-option *ngFor="let chemical of chemicals" [value]="chemical">{{ chemical }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+          <input type="text" matInput [formControl]="chemicalControl" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="createChart()">
+            <mat-option *ngFor="let chemical of filteredChemicals | async" [value]="chemical">
+              {{ chemical }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>        
       </div>
       <div class="input-field">
         <mat-form-field appearance="outline">

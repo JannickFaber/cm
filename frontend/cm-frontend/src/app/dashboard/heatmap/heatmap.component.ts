@@ -9,13 +9,17 @@ import { GWPValues } from './g-w-p-values';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { Observable, startWith, map } from 'rxjs';
+import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 Chart.register(...registerables, ChoroplethController, ColorScale, ProjectionScale, GeoFeature);
 
 @Component({
   selector: 'app-heatmap',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, FormsModule, ReactiveFormsModule, MatInputModule],
   templateUrl: './heatmap.component.html',
   styleUrl: './heatmap.component.scss'
 })
@@ -25,7 +29,8 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
 
   @Input() gwpValues: GWPValues[] = [];
 
-  selectedChemical: string = '';
+  chemicalControl = new FormControl('');
+  filteredChemicals: Observable<string[]> | undefined;
   selectedGWP: string = 'Total';
   chemicals: string[] = [];
   gwps: string[] = [];
@@ -35,9 +40,14 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.chemicals = [...new Set(this.gwpValues.map(values => values.name))];
-    this.selectedChemical = this.chemicals[0];
+    this.chemicalControl.setValue(this.chemicals[0]);
 
     this.gwps = ['Total', 'Biogenic Emission', 'Biogenic Reduction', 'Fossil', 'Land use'];
+
+    this.filteredChemicals = this.chemicalControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.filterChemicals(value || ''))
+    );
 
     this.loadWorldData();
   }
@@ -78,7 +88,7 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
 
       let value: number | undefined;
       const gwps = this.gwpValues
-        .filter(value => value.name === this.selectedChemical)
+        .filter(value => value.name === this.chemicalControl.value)
         .find(value => value.country === d.properties.name);
 
       switch (this.selectedGWP) {
@@ -184,5 +194,10 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
     }
 
     return '#08306B';
+  }
+
+  private filterChemicals(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.chemicals.filter(chemical => chemical.toLowerCase().includes(filterValue));
   }
 }
