@@ -58,10 +58,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  logout(): void {
-    this.authService.logout();
-  }
-
   applyFilter(): void {
     console.log('Filter angewendet:', this.selectedStoff, this.selectedLand, this.selectedProzess);
     // Hier kannst du nun die Daten filtern und Charts neu rendern

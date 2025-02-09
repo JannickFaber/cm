@@ -1,15 +1,32 @@
 @use '@angular/material' as mat;
+@use './m3-theme';
 
 :root {
-  @include mat.core-theme(mat.define-theme());
-  @include mat.all-component-themes(mat.define-theme());
+  @include mat.core-theme(m3-theme.$light-theme);
+  @include mat.button-theme(m3-theme.$light-theme);
 
   .mat-mdc-card {
     border: 0;
     box-shadow: none;
   }
+
+  body {
+    margin: 0;
+  }
+
+  .mdc-button__label {
+    color: white
+  }
+
+  .mat-mdc-outlined-button {
+    font-size: medium;
+
+    &:not(:disabled) {
+      border-color: white;
+    }
+  }
 }
 
 .mat-mdc-text-field-wrapper {
-background-color: white;
+  background-color: white;
 }

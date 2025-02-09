@@ -1,10 +1,10 @@
-<mat-card>
-  <mat-card-content>
-    <div class="login-container">
-      <h2>Login</h2>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-content>
+      <div class="login-container">
+        <h2>Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-        <div class="form-wrapper">
+          <div class="form-wrapper">
 
             <mat-form-field appearance="outline">
               <mat-label>Username</mat-label>
@@ -18,11 +18,11 @@
             </mat-form-field>
 
 
-          <button type="submit" [disabled]="loginForm.invalid" mat-stroked-button>Sign in</button>
-        </div>
-      </form>
+            <button type="submit" [disabled]="loginForm.invalid" mat-stroked-button>Sign in</button>
+          </div>
+        </form>
 
-      <p *ngIf="loginError" class="error">{{ loginError }}</p>
-    </div>
-  </mat-card-content>
-</mat-card>
+        <p *ngIf="loginError" class="error">{{ loginError }}</p>
+      </div>
+    </mat-card-content>
+  </mat-card>

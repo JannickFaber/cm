@@ -8,9 +8,8 @@ import { importProvidersFrom } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const routes: Route[] = [
-  { path: '', component: AppComponent },
   {
-    path: 'login',
+    path: '',
     loadComponent: () => import('./app/login/login.component').then(m => m.LoginComponent),
     canActivate: [authGuard]
   },
