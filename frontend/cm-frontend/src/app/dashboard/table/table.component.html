@@ -1,29 +1,29 @@
 <h3>Global Warming Potential Data</h3>
-<div class="table-container">
-  <div class="filters">
-    <div class="search">
-      <mat-form-field appearance="outline">
-        <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="chemical, CAS or country">
-      </mat-form-field>
-    </div>
-    <div class="checkbox">
-      <mat-checkbox class="example-margin" checked (change)="toggleTable('total')">Total</mat-checkbox>
-    </div>
-    <div class="checkbox">
-      <mat-checkbox class="example-margin" (change)="toggleTable('bioEmission')">Bio. emission</mat-checkbox>
-    </div>
-    <div class="checkbox">
-      <mat-checkbox class="example-margin" (change)="toggleTable('bioRemoval')">Bio. removal</mat-checkbox>
-    </div>
-    <div class="checkbox">
-      <mat-checkbox class="example-margin" (change)="toggleTable('fossil')">Fossil</mat-checkbox>
-    </div>
-    <div class="checkbox">
-      <mat-checkbox class="example-margin" (change)="toggleTable('landUse')">Land use</mat-checkbox>
-    </div>
+<div class="filters">
+  <div class="search">
+    <mat-form-field appearance="outline">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="chemical, CAS or country">
+    </mat-form-field>
   </div>
+  <div class="checkbox">
+    <mat-checkbox class="example-margin" checked (change)="toggleTable('total')">Total</mat-checkbox>
+  </div>
+  <div class="checkbox">
+    <mat-checkbox class="example-margin" (change)="toggleTable('bioEmission')">Bio. emission</mat-checkbox>
+  </div>
+  <div class="checkbox">
+    <mat-checkbox class="example-margin" (change)="toggleTable('bioRemoval')">Bio. removal</mat-checkbox>
+  </div>
+  <div class="checkbox">
+    <mat-checkbox class="example-margin" (change)="toggleTable('fossil')">Fossil</mat-checkbox>
+  </div>
+  <div class="checkbox">
+    <mat-checkbox class="example-margin" (change)="toggleTable('landUse')">Land use</mat-checkbox>
+  </div>
+</div>
 
+<div class="table-container">
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
     <ng-container matColumnDef="name">
@@ -69,6 +69,6 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

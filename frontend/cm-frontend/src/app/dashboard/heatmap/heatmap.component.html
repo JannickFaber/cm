@@ -12,7 +12,7 @@
       </div>
       <div class="input-field">
         <mat-form-field appearance="outline">
-          <mat-label>GWP Type</mat-label>
+          <mat-label>GWP Value</mat-label>
           <mat-select [(value)]="selectedGWP" (selectionChange)="createChart()">
             <mat-option *ngFor="let gwp of gwps" [value]="gwp">{{ gwp }}</mat-option>
           </mat-select>

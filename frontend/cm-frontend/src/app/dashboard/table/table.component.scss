@@ -1,5 +1,7 @@
 .table-container {
   width: 100%;
+  overflow-x: auto;
+  display: block;
 }
 
 mat-form-field {
@@ -20,6 +22,7 @@ table {
   display: flex;
   justify-content: left;
   align-items: start;
+  flex-wrap: wrap;
 
   .checkbox {
     margin-left: 0.5rem;
