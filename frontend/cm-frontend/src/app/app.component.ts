@@ -19,8 +19,7 @@ export class AppComponent {
   $isLoggedIn: Observable<boolean>;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) {
     this.$isLoggedIn = this.authService.$isLoggedIn;
   }
