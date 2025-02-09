@@ -2,6 +2,12 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogTitle,
+  MatDialogContent,
+} from '@angular/material/dialog';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-details',
@@ -12,4 +18,5 @@ import { MatDialogModule } from '@angular/material/dialog';
 })
 export class DetailsComponent {
 
+  data = inject(MAT_DIALOG_DATA);
 }

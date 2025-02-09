@@ -10,9 +10,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { ChemicalProcessData } from '../chemical-process-data';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { inject } from '@angular/core';
 import { DetailsComponent } from './details/details.component';
+import {
+  MatDialog,
+  MatDialogModule
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-table',
@@ -79,11 +82,7 @@ export class TableComponent {
   }
 
   openDialog(data: any) {
-    const dialogRef = this.dialog.open(DetailsComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
+    this.dialog.open(DetailsComponent, { data });
   }
 }
 
