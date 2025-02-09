@@ -1,13 +1,14 @@
 .layout-wrapper {
   display: flex;
+  margin-top: 2rem;
 }
 
 .filter-wrapper {
-  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: left;
   flex-wrap: wrap;
+  padding-right: 1rem;
 
   div {
     padding-left: 0.25rem;
@@ -20,7 +21,8 @@ canvas {
   height: auto !important;
   min-height: 50rem;
   display: block;
-
+  background-color: white;
+  border-radius: 12px;
 }
 
 #canvas-wrapper {
@@ -41,6 +43,7 @@ canvas {
 
 .filter-wrapper {
   flex-direction: row;
+  padding: 0;
 }
 }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, Input, inject, AfterViewInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables, TooltipItem } from 'chart.js';
 import { ChoroplethController, ColorScale, ProjectionScale, GeoFeature, ChoroplethChart } from 'chartjs-chart-geo';
 import * as topojson from 'topojson-client';
 import { FeatureCollection, Geometry } from 'geojson';
@@ -126,6 +126,11 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
         plugins: {
           legend: {
             display: false
+          },
+          tooltip: {
+            callbacks: {
+              label: (v) => this.getTooltipValue(v)
+            }
           }
         },
         scales: {
@@ -135,6 +140,7 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
           },
           color: {
             display: false,
+            interpolate: (v) => this.getColorScale(v),
             axis: 'x',
             quantize: 5,
             legend: {
@@ -145,5 +151,39 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
         }
       }
     });
+  }
+
+  getTooltipValue(value: TooltipItem<'choropleth'>): string {
+
+    const displayValue = value.formattedValue === 'NaN' ? 'no data' : value.formattedValue;
+    const countryName = (value.element as any).feature.properties.name;
+
+    return ` ${countryName}: ${displayValue}`
+  }
+
+  getColorScale(value: number): string {
+
+    if (value === 0) {
+      return '#F3F3F3'
+    }
+
+    if (value < 0.2) {
+      return '#C4CCD8'
+    }
+
+    if (value < 0.4) {
+      return '#95A5BD'
+    }
+
+    if (value < 0.6) {
+      return '#667EA1'
+    }
+
+    if (value < 0.8) {
+      return '#375786'
+    }
+
+    return '#08306B';
+
   }
 }
