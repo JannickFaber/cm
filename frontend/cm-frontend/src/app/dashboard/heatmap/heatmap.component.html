@@ -1,14 +1,15 @@
 <h3>Global Warming Potential (GWP)</h3>
 <div class="layout-wrapper">
   <div class="filter-wrapper">
-    <div><mat-form-field appearance="outline">
+    <div class="input-field">
+      <mat-form-field appearance="outline">
         <mat-label>Chemical</mat-label>
         <mat-select [(value)]="selectedChemical" (selectionChange)="createChart()">
           <mat-option *ngFor="let chemical of chemicals" [value]="chemical">{{ chemical }}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-    <div>
+    <div class="input-field">
       <mat-form-field appearance="outline">
         <mat-label>GWP Type</mat-label>
         <mat-select [(value)]="selectedGWP" (selectionChange)="createChart()">
@@ -16,6 +17,25 @@
         </mat-select>
       </mat-form-field>
     </div>
+
+    <div class="legend">
+      <div class="legend-values">
+        <div class="legend-value">0</div>
+        <div class="legend-value">0.2</div>
+        <div class="legend-value">0.4</div>
+        <div class="legend-value">0.6</div>
+        <div class="legend-value">0.8</div>
+        <div class="legend-value">1</div>
+      </div>
+      <div class="legend-colors">
+        <div class="legend-part" style="background-color: #C4CCD8;"></div>
+        <div class="legend-part" style="background-color: #95A5BD;"></div>
+        <div class="legend-part" style="background-color: #667EA1;"></div>
+        <div class="legend-part" style="background-color: #375786;"></div>
+        <div class="legend-part" style="background-color: #08306B;"></div>
+      </div>
+    </div>
+
   </div>
   <div id="canvas-wrapper">
     <canvas #heatmapCanvas></canvas>

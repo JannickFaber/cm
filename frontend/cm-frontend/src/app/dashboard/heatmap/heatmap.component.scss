@@ -9,10 +9,13 @@
   justify-content: left;
   flex-wrap: wrap;
   padding-right: 1rem;
+  justify-content: center;
 
-  div {
+  .input-field {
     padding-left: 0.25rem;
-    padding-right: 0.25rem
+    padding-right: 0.25rem;
+    max-width: 16rem;
+    min-width: 16rem;
   }
 }
 
@@ -33,18 +36,53 @@ canvas {
 }
 
 .mat-mdc-form-field {
+  width: 100%;
+}
+
+.legend {
+  max-width: 16rem;
   min-width: 16rem;
 }
 
-@media (max-width: 1200px) {
-.layout-wrapper {
-  flex-direction: column;
+.legend-values {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+  font-size: small;
 }
 
-.filter-wrapper {
-  flex-direction: row;
-  padding: 0;
+.legend-colors {
+  display: flex;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+
+  .legend-part {
+    height: 1rem;
+    flex-grow: 1;
+  }
 }
+
+@media (max-width: 1200px) {
+  .legend {
+    margin-top: 0;
+    flex-grow: 1;
+  }
+
+  .layout-wrapper {
+    flex-direction: column;
+  }
+
+  .filter-wrapper {
+    flex-direction: row;
+    padding: 0;
+
+
+
+    .input-field {
+      flex-grow: 1;
+    }
+  }
 }
 
 @media (max-width: 768px) {

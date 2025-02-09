@@ -184,6 +184,5 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
     }
 
     return '#08306B';
-
   }
 }
