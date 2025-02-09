@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
+import { ChemicalProcessData } from '../chemical-process-data';
 
 @Component({
   selector: 'app-table',
@@ -36,6 +37,8 @@ export class TableComponent {
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  @Input() chemicalProcessData: ChemicalProcessData[] = [];
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;

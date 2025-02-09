@@ -1,36 +1,13 @@
 <div *ngIf="!isLoading">
-
-  <!-- <div class="filter-container">
-    <mat-form-field appearance="outline">
-      <mat-label>Stoff</mat-label>
-      <mat-select [(value)]="selectedStoff" (selectionChange)="applyFilter()">
-        <mat-option *ngFor="let stoff of stoffe" [value]="stoff">{{ stoff }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Land</mat-label>
-      <mat-select [(value)]="selectedLand" (selectionChange)="applyFilter()">
-        <mat-option *ngFor="let land of laender" [value]="land">{{ land }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Prozess</mat-label>
-      <mat-select [(value)]="selectedProzess" (selectionChange)="applyFilter()">
-        <mat-option *ngFor="let prozess of prozesse" [value]="prozess">{{ prozess }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-
-<app-barchart></app-barchart>
-<app-table></app-table> -->
+  <mat-card>
+    <mat-card-content>
+      <app-table [chemicalProcessData]="chemicalProcessData"></app-table>
+    </mat-card-content>
+  </mat-card>
 
   <mat-card>
     <mat-card-content>
       <app-heatmap [gwpValues]="gwpValues"></app-heatmap>
     </mat-card-content>
   </mat-card>
-  <!-- <app-radar-chart></app-radar-chart> -->
 </div>
