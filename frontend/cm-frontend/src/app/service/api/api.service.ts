@@ -8,7 +8,7 @@ import { LCAData } from './lca-data';
 })
 export class ApiService {
 
-  private readonly baseURL = 'http://127.0.0.1:8000';
+  private readonly baseURL = 'https://cm-og5m.onrender.com';
 
   private http = inject(HttpClient);
 
