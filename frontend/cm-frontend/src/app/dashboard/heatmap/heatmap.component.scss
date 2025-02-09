@@ -1,6 +1,12 @@
-.filter-wrapper {
+.layout-wrapper {
   display: flex;
-  justify-content: center;
+}
+
+.filter-wrapper {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
   flex-wrap: wrap;
 
   div {
@@ -26,6 +32,16 @@ canvas {
 
 .mat-mdc-form-field {
   min-width: 16rem;
+}
+
+@media (max-width: 1200px) {
+.layout-wrapper {
+  flex-direction: column;
+}
+
+.filter-wrapper {
+  flex-direction: row;
+}
 }
 
 @media (max-width: 768px) {
