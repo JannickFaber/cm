@@ -57,15 +57,15 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.resizeCanvas()
-    window.addEventListener('resize', () => this.resizeCanvas()); // Listener hinzufügen
+    window.addEventListener('resize', () => this.resizeCanvas());
   }
 
   resizeCanvas() {
     const canvas = this.heatmapCanvas.nativeElement;
-    canvas.width = window.innerWidth * 0.9; // 90% der Fensterbreite
-    canvas.height = window.innerHeight * 0.7; // 70% der Fensterhöhe
+    canvas.width = window.innerWidth * 0.9;
+    canvas.height = window.innerHeight * 0.7;
 
-    // Falls du mit Chart.js arbeitest, musst du den Chart neu rendern:
+
     if (this.currentChart) {
       this.currentChart.resize();
     }
@@ -127,7 +127,7 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
         datasets: [{
           label: '',
           data: this.getData(),
-          borderColor: "grey", // Dunklere Ränder für bessere Sichtbarkeit
+          borderColor: "grey",
           borderWidth: 0.4
         }]
       },

@@ -45,7 +45,7 @@ export class LoginComponent implements OnDestroy {
         this.authService.login(form.username, form.password)
           .subscribe(success => {
             if (!success) {
-              this.loginError = 'Login fehlgeschlagen. Überprüfe Benutzername und Passwort.'
+              this.loginError = 'Login failed. Please check your username and password.'
             }
             this.showOverlay = false;
           }));

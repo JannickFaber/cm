@@ -15,7 +15,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Fake-Datenbank (in einer echten Anwendung sollte hier eine DB verwendet werden)
 fake_users_db = {
     "testuser": {
         "username": "testuser",
@@ -29,7 +28,6 @@ def load_excel_data():
 
 @app.post("/login")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    """Login-Endpoint, gibt ein JWT-Token zurück."""
     user = fake_users_db.get(form_data.username)
     if not user or not verify_password(form_data.password, user["hashed_password"]):
         raise HTTPException(status_code=400, detail="Falscher Benutzername oder Passwort")
