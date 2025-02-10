@@ -9,17 +9,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { LoadingOverlayComponent } from "../loading-overlay/loading-overlay.component";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, MatCardModule, MatButtonModule, MatInputModule, MatFormFieldModule, FormsModule, LoadingOverlayComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnDestroy {
   loginForm: FormGroup;
   loginError: string = '';
+  showOverlay = false;
 
   private subscription = new Subscription();
   private authService = inject(AuthService);
@@ -36,6 +38,7 @@ export class LoginComponent implements OnDestroy {
   }
 
   onSubmit(): void {
+    this.showOverlay = true;
     if (this.loginForm.valid) {
       const form = this.loginForm.value;
       this.subscription.add(
@@ -44,6 +47,7 @@ export class LoginComponent implements OnDestroy {
             if (!success) {
               this.loginError = 'Login fehlgeschlagen. Überprüfe Benutzername und Passwort.'
             }
+            this.showOverlay = false;
           }));
     }
   }

@@ -1,4 +1,7 @@
-<div *ngIf="!isLoading">
+@if(isLoading) {
+<app-loading-overlay></app-loading-overlay>
+} @else {
+<div>
   <mat-card>
     <mat-card-content>
       <app-table [chemicalProcessData]="chemicalProcessData"></app-table>
@@ -11,3 +14,4 @@
     </mat-card-content>
   </mat-card>
 </div>
+}

@@ -9,6 +9,7 @@ import { map, Subscription } from 'rxjs';
 import { ChemicalProcessData, mapToChemicalProcessDataArray } from './chemical-process-data';
 import { GWPValues } from './heatmap/g-w-p-values';
 import { MatCardModule } from '@angular/material/card';
+import { LoadingOverlayComponent } from "../loading-overlay/loading-overlay.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,8 @@ import { MatCardModule } from '@angular/material/card';
     MatSelectModule,
     TableComponent,
     HeatmapComponent,
-    MatCardModule],
+    MatCardModule,
+    LoadingOverlayComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
