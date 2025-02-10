@@ -112,3 +112,16 @@ canvas {
     min-height: auto;
   }
 }
+
+.clear-button {
+  color: rgba(0, 0, 0, 0.5);
+  border: none;
+  outline: none;
+  background: none;
+  padding-right: 0.75rem;
+  cursor: pointer;
+}
+
+.clear-button:hover {
+  color: black;
+}

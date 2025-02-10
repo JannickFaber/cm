@@ -6,6 +6,17 @@
         <mat-form-field appearance="outline">
           <mat-label>Chemical</mat-label>
           <input type="text" matInput [formControl]="chemicalControl" [matAutocomplete]="auto">
+
+          <button
+          *ngIf="chemicalControl.value"
+          matSuffix 
+          mat-icon-button 
+          class="clear-button"
+          aria-label="Clear"
+          (click)="clearSearch()">
+          <mat-icon>close</mat-icon>
+        </button>
+
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)="createChart()">
             <mat-option *ngFor="let chemical of filteredChemicals | async" [value]="chemical">
               {{ chemical }}

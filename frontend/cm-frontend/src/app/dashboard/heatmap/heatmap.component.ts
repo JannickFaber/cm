@@ -13,13 +13,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, startWith, map } from 'rxjs';
 import { FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 Chart.register(...registerables, ChoroplethController, ColorScale, ProjectionScale, GeoFeature);
 
 @Component({
   selector: 'app-heatmap',
   standalone: true,
-  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, FormsModule, ReactiveFormsModule, MatInputModule],
+  imports: [CommonModule, MatFormFieldModule, MatSelectModule, MatAutocompleteModule, FormsModule, ReactiveFormsModule, MatInputModule, MatIconModule],
   templateUrl: './heatmap.component.html',
   styleUrl: './heatmap.component.scss'
 })
@@ -201,8 +202,12 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
   private filterChemicals(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.chemicalNames
-    .filter(chemical => chemical.name.toLowerCase().includes(filterValue) || chemical.cas?.toLowerCase().includes(filterValue))
-    .map(chem => chem.name);
+      .filter(chemical => chemical.name.toLowerCase().includes(filterValue) || chemical.cas?.toLowerCase().includes(filterValue))
+      .map(chem => chem.name);
+  }
+
+  clearSearch() {
+    this.chemicalControl.setValue('');
   }
 }
 
